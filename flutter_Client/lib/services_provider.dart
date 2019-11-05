@@ -35,6 +35,7 @@ class ServicesProvider extends StatelessWidget {
           ) {
             print(
                 '${DateTime.now().toUtc().toString()} NetworkService $storage');
+            final ChatSubScription chatSubScription = ChatSubScription();
             return storage == null
                 ? null
                 : NetworkService('unique',
@@ -42,10 +43,10 @@ class ServicesProvider extends StatelessWidget {
                     subscriptions: <MessageType, Subscriptions<dynamic>>{
                         // TODO(FlutterDevelopers): Import your subscriptions here
                         MessageType.CHAT: Subscriptions<Chat>(
-                          receivingIsolate: chatIncoming,
-                          sendingIsolate: chatOutgoing,
-                          onSendDo: chatOnSendDo,
-                          onRecieveDo: chatOnRecieveDo,
+                          receivingIsolate: chatSubScription.receivingIsolate,
+                          sendingIsolate: chatSubScription.sendingIsolate,
+                          onSendDo: chatSubScription.onSendDo,
+                          onRecieveDo: chatSubScription.onRecieveDo,
                         ),
                       });
           },

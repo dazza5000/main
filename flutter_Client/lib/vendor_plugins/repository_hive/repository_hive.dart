@@ -90,4 +90,11 @@ class HiveRepository<Item> extends Repository<Item> {
     await _ensureBoxOpened();
     await _box.put(id.id, item);
   }
+
+  Future<void> watch() async {
+    await _ensureBoxOpened();
+    return _box.watch().listen((BoxEvent event) {
+      return event.value;
+    });
+  }
 }
