@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Categories=
+Name=com.winwisely99.app
+Icon=/usr/lib/com.winwisely99.app/assets/icon.png
+Exec=/usr/bin/com.winwisely99.app
