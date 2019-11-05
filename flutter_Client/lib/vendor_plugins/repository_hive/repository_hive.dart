@@ -82,4 +82,12 @@ class HiveRepository<Item> extends Repository<Item> {
     await _ensureBoxOpened();
     await _box.delete(id.id);
   }
+
+  Future<void> add(Id<Item> id, Item item) async {
+    assert(id != null);
+    assert(item != null);
+
+    await _ensureBoxOpened();
+    await _box.put(id.id, item);
+  }
 }
