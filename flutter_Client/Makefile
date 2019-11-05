@@ -67,11 +67,9 @@ flu-update:
 ### DESK
 
 flu-desk-local-run: ## flu-desk-local-run
-	# does not use docker
 	cd $(SAMPLE_FSPATH) && hover run
 
 flu-desk-local-build: ## flu-desk-local-build
-	# does not use docker
 	cd $(SAMPLE_FSPATH) && hover build
 
 
@@ -85,10 +83,7 @@ flu-desk-build-init:
 
 flu-desk-build-clean:
 	rm -rf $(SAMPLE_FSPATH)/go
-
-	# this wipes ALL of docker data
 	docker system prune
-	#docker system prune --force
 
 
 flu-desk-build:
