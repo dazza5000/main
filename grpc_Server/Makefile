@@ -80,7 +80,7 @@ cloud-client-get:
 export PORT=8080
 local-serve:
 	# works
-	cd $(SAMPLE_FSPATH)/cmd/api && go run .
+	cd $(SAMPLE_FSPATH)/cmd/server && go run .
 
 local-client-get:
 	# TODO for testing
