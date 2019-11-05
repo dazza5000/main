@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+//import "google/protobuf/wrappers.proto";
+
+// Chat is response for ChatService.Subscribe method
+message Chat{
+    // message body
+    string id = 1; // Chat ID
+    string text = 2; // Chat Text
+    string uid = 3; //  User ID
+    google.protobuf.Timestamp createdAt = 4; // created timestamp
+    enum AttachmentType {
+        NONE = 0;
+        IMAGE = 1;
+        FILE = 2;
+        VIDEO = 3;
+        GEOLOCATION = 4;
+        CALENDER = 5;
+    }
+    AttachmentType attachmentType = 5; // Attachment type
+    string attachmentUrl = 6; // attachment path
+    string conversationsId = 7; // conversationsId
+
+}
+
+service ChatService {
+    // Send sends message to the server
+    rpc Send(Chat) returns (google.protobuf.Empty) {}
+
+    // Subscribe is streaming method to get echo messages from the server
+    rpc Subscribe(google.protobuf.Empty) returns (stream Chat) {}
+}
