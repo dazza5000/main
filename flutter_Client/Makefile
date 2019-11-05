@@ -1,4 +1,4 @@
-# github.com/winwisely99/chat-module
+# github.com/winwisely99/main
 
 LIB_NAME=main
 LIB=github.com/winwisely99/$(LIB_NAME)
