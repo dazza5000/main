@@ -7,7 +7,7 @@ LIB_FSPATH=$(GOPATH)/src/$(LIB)
 
 GO111MODULE=on
 
-SAMPLE_NAME=main
+SAMPLE_NAME=flutter_Client
 SAMPLE_FSPATH=$(LIB_FSPATH)/$(SAMPLE_NAME)
 
 
@@ -49,9 +49,6 @@ flu-config: ## flu-config
 
 flu-config-desk: ## flu-config-desk
 	hover -h
-
-
-
 
 
 
