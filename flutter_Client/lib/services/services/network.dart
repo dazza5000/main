@@ -1,5 +1,6 @@
 import 'dart:isolate';
 
+import 'package:rxdart/rxdart.dart';
 import 'package:collection/collection.dart' show groupBy;
 import 'package:meta/meta.dart';
 
@@ -51,6 +52,13 @@ class NetworkService {
 
   /// Subscriptions
   Map<MessageType, Subscriptions<dynamic>> subscriptions;
+
+  /// Controller to send message status to rest of the application
+  final BehaviorSubject<MessageHandler<dynamic>> _messageSendController =
+      BehaviorSubject<MessageHandler<dynamic>>();
+  Sink<MessageHandler<dynamic>> get addMessage => _messageSendController.sink;
+  Stream<MessageHandler<dynamic>> get messageStream =>
+      _messageSendController.stream;
 
   /// Start thread to send messages
   Future<bool> _startSending() async {

@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:repository/repository.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'package:com.winwisely99.app/services/services.dart';
 import 'package:com.winwisely99.app/conversations/conversations.dart';
@@ -24,13 +25,46 @@ class ChatBloc {
           // strategy: CacheStrategy.onlyFetchFromSourceIfNotInCache,
           source: ConversationsDownloader(network: network, user: user),
           cache: HiveRepository<Conversations>('conversations'),
-        );
+        ) {
+    _chatFetcher.stream
+        .transform(_chatScreenTransformer())
+        .pipe(_chatScreenOutput);
+    getAllChats();
+  }
 
   final NetworkService network;
   final UserService user;
   final String conversationsId;
   final Repository<ChatModel> _chats;
   final Repository<Conversations> _conversations;
+
+// this is similar to the Streambuilder and Itemsbuilder we have in the Stories bloc
+  final PublishSubject<ChatModel> _chatFetcher = PublishSubject<ChatModel>();
+  final BehaviorSubject<Map<Id<ChatModel>, ChatModel>> _chatScreenOutput =
+      BehaviorSubject<Map<Id<ChatModel>, ChatModel>>();
+// Getter to Stream
+  Observable<Map<Id<ChatModel>, ChatModel>> get chatScreen =>
+      _chatScreenOutput.stream;
+  Function(ChatModel) get addChatToScreen => _chatFetcher.sink.add;
+
+  ScanStreamTransformer<ChatModel, Map<Id<ChatModel>, ChatModel>>
+      _chatScreenTransformer() {
+    return ScanStreamTransformer<ChatModel, Map<Id<ChatModel>, ChatModel>>(
+        (Map<Id<ChatModel>, ChatModel> cache, ChatModel value, int index) {
+      cache ??= <Id<ChatModel>, ChatModel>{};
+      cache[value.id] = value;
+      return cache;
+    }, <Id<ChatModel>, ChatModel>{});
+  }
+
+  Future<bool> getAllChats() async {
+    _chats.fetchAllItems().listen((List<ChatModel> list) {
+      for (ChatModel chat in list) {
+        addChatToScreen(chat);
+      }
+    });
+    return true;
+  }
 
   Stream<List<ChatModel>> getChats() => _chats.fetchAllItems();
   Future<Conversations> getConversation(Id<Conversations> id) =>
@@ -48,6 +82,21 @@ class ChatBloc {
         messageType: MessageType.CHAT,
       ),
     );
+  }
+
+  void drain() {
+    _chatFetcher.drain<bool>();
+    _chatScreenOutput.drain<List<Map<String, dynamic>>>();
+  }
+
+  Future<bool> dispose() async {
+    await _chatFetcher.drain<bool>();
+    _chatScreenOutput.drain<List<Map<String, dynamic>>>();
+
+    _chatFetcher.close();
+    _chatScreenOutput.close();
+
+    return true;
   }
 }
 
