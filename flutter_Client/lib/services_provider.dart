@@ -40,6 +40,7 @@ class ServicesProvider extends StatelessWidget {
                 : NetworkService('unique',
                     storage: storage,
                     subscriptions: <MessageType, Subscriptions<dynamic>>{
+                        // TODO(FlutterDevelopers): Import your subscriptions here
                         MessageType.CHAT: Subscriptions<Chat>(
                           receivingIsolate: chatIncoming,
                           sendingIsolate: chatOutgoing,

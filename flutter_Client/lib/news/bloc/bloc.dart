@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:repository/repository.dart';
-import 'package:repository_hive/repository_hive.dart';
 
 import 'package:com.winwisely99.app/services/services.dart';
+import 'package:com.winwisely99.app/vendor_plugins/vendor_plugins.dart';
 
 import '../bloc/data.dart';
 
