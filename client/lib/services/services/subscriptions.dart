@@ -49,6 +49,7 @@ class Subscriptions<T> {
 
   /// Actions to perform on recieve
   Future<bool> onRecieve() async {
+    // ignore: prefer_foreach
     await for (dynamic event in portReceiving) {
       onRecieveDo(event);
     }

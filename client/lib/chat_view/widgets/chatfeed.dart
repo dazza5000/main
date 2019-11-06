@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:repository/repository.dart';
 
-import '../../services/services.dart';
+import 'package:com.winwisely99.app/conversations/conversations.dart';
+import 'package:com.winwisely99.app/services/services.dart';
 import '../bloc/bloc.dart';
 import '../bloc/data.dart';
-import '../../conversations/conversations.dart';
 
 class ChatFeed extends StatelessWidget {
   const ChatFeed({Key key, @required this.conversationsId}) : super(key: key);
@@ -119,23 +119,32 @@ class _ChatFeedBodyState extends State<_ChatFeedBody> {
               ),
             ),
           );
-        } else {
-          List<ChatMessage> messages = snapshot.data.values
-              .map((ChatModel chat) => ChatMessage(
-                    id: chat.id.id,
-                    text: chat.text,
-                    user: ChatUser(
-                      uid: chat.user.id.id,
-                      name: chat.user.displayName,
-                      avatar: chat.user.avatarURL,
-                    ),
-                    image: chat.attachmentType == AttachmentType.image
-                        ? chat.attachmentUrl
-                        : null,
-                    vedio: chat.attachmentType == AttachmentType.video
-                        ? chat.attachmentUrl
-                        : null,
-                    createdAt: chat.createdAt,
+        }
+        if (snapshot.data == null) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Theme.of(context).primaryColor,
+              ),
+            ),
+          );
+        }
+        List<ChatMessage> messages = snapshot.data.values
+            .map((ChatModel chat) => ChatMessage(
+                  id: chat.id.id,
+                  text: chat.text,
+                  user: ChatUser(
+                    uid: chat.user.id.id,
+                    name: chat.user.displayName,
+                    avatar: chat.user.avatarURL,
+                  ),
+                  image: chat.attachmentType == AttachmentType.image
+                      ? chat.attachmentUrl
+                      : null,
+                  vedio: chat.attachmentType == AttachmentType.video
+                      ? chat.attachmentUrl
+                      : null,
+                  createdAt: chat.createdAt,
 /*                     quickReplies: QuickReplies(
                       values: <Reply>[
                         Reply(
@@ -148,65 +157,63 @@ class _ChatFeedBodyState extends State<_ChatFeedBody> {
                         ),
                       ],
                     ), */
-                  ))
-              .toList();
+                ))
+            .toList();
 
-          return DashChat(
-            key: _chatViewKey,
-            inverted: false,
-            onSend: (ChatMessage message) async {
-              await _chatBloc.sendChat(
-                ChatModel(
-                  id: Id<ChatModel>(UniqueKey().toString()),
-                  uid: Id<User>(widget.user.uid),
-                  text: message.text,
-                  createdAt: DateTime.now().toUtc(),
-                  attachmentType: AttachmentType.none,
-                  attachmentUrl: '',
-                  conversationsId: widget.conversationsId,
-                ),
-              );
-            },
-            user: widget.user,
-            inputDecoration:
-                InputDecoration.collapsed(hintText: 'Add message here...'),
-            dateFormat: DateFormat('yyyy-MMM-dd'),
-            timeFormat: DateFormat('HH:mm'),
-            messages: messages,
-            showUserAvatar: true,
-            showAvatarForEveryMessage: false,
-            scrollToBottom: false,
-            onPressAvatar: (ChatUser user) {
-              print('OnPressAvatar: ${user.name}');
-            },
-            onLongPressAvatar: (ChatUser user) {
-              print('OnLongPressAvatar: ${user.name}');
-            },
-            inputMaxLines: 5,
-            messageContainerPadding:
-                const EdgeInsets.only(left: 5.0, right: 5.0),
-            alwaysShowSend: true,
-            inputTextStyle: TextStyle(fontSize: 16.0),
-            inputContainerStyle: BoxDecoration(
-              border: Border.all(width: 0.0),
-              color: Colors.white,
-            ),
-            onQuickReply: (Reply reply) {
-              setState(
-                () {
-                  messages.add(
-                    ChatMessage(
-                        text: reply.value,
-                        createdAt: DateTime.now(),
-                        user: widget.user),
-                  );
+        return DashChat(
+          key: _chatViewKey,
+          inverted: false,
+          onSend: (ChatMessage message) async {
+            await _chatBloc.sendChat(
+              ChatModel(
+                id: Id<ChatModel>(UniqueKey().toString()),
+                uid: Id<User>(widget.user.uid),
+                text: message.text,
+                createdAt: DateTime.now().toUtc(),
+                attachmentType: AttachmentType.none,
+                attachmentUrl: '',
+                conversationsId: widget.conversationsId,
+              ),
+            );
+          },
+          user: widget.user,
+          inputDecoration:
+              InputDecoration.collapsed(hintText: 'Add message here...'),
+          dateFormat: DateFormat('yyyy-MMM-dd'),
+          timeFormat: DateFormat('HH:mm'),
+          messages: messages,
+          showUserAvatar: true,
+          showAvatarForEveryMessage: false,
+          scrollToBottom: false,
+          onPressAvatar: (ChatUser user) {
+            print('OnPressAvatar: ${user.name}');
+          },
+          onLongPressAvatar: (ChatUser user) {
+            print('OnLongPressAvatar: ${user.name}');
+          },
+          inputMaxLines: 5,
+          messageContainerPadding: const EdgeInsets.only(left: 5.0, right: 5.0),
+          alwaysShowSend: true,
+          inputTextStyle: TextStyle(fontSize: 16.0),
+          inputContainerStyle: BoxDecoration(
+            border: Border.all(width: 0.0),
+            color: Colors.white,
+          ),
+          onQuickReply: (Reply reply) {
+            setState(
+              () {
+                messages.add(
+                  ChatMessage(
+                      text: reply.value,
+                      createdAt: DateTime.now(),
+                      user: widget.user),
+                );
 // ignore: sdk_version_ui_as_code
-                  messages = <ChatMessage>[...messages];
-                },
-              );
-            },
-          );
-        }
+                messages = <ChatMessage>[...messages];
+              },
+            );
+          },
+        );
       },
     );
   }

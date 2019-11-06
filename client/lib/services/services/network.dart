@@ -1,6 +1,5 @@
 import 'dart:isolate';
 
-import 'package:rxdart/rxdart.dart';
 import 'package:collection/collection.dart' show groupBy;
 import 'package:meta/meta.dart';
 
@@ -53,13 +52,6 @@ class NetworkService {
   /// Subscriptions
   Map<MessageType, Subscriptions<dynamic>> subscriptions;
 
-  /// Controller to send message status to rest of the application
-  final BehaviorSubject<MessageHandler<dynamic>> _messageSendController =
-      BehaviorSubject<MessageHandler<dynamic>>();
-  Sink<MessageHandler<dynamic>> get addMessage => _messageSendController.sink;
-  Stream<MessageHandler<dynamic>> get messageStream =>
-      _messageSendController.stream;
-
   /// Start thread to send messages
   Future<bool> _startSending() async {
     // start thread to send messages
@@ -74,7 +66,7 @@ class NetworkService {
   }
 
   /// Start listening messages from the server
-  void _startReceiving() async {
+  Future<dynamic> _startReceiving() async {
     // start thread to receive messages for all Subscriptions
     for (MessageType type in subscriptions.keys) {
       subscriptions[type].isolateReceiving = await Isolate.spawn(
@@ -83,20 +75,6 @@ class NetworkService {
       );
       subscriptions[type].onRecieve();
     }
-
-/*     // listen for incoming messages
-    await for (var event in _portReceiving) {
-      if (event is MessageReceivedEvent) {
-        if (onMessageReceived != null) {
-          print('event: $event');
-          onMessageReceived(event);
-        }
-      } else if (event is MessageReceiveFailedEvent) {
-        if (onMessageReceiveFailed != null) {
-          onMessageReceiveFailed(event);
-        }
-      }
-    } */
   }
 
   // Shutdown client

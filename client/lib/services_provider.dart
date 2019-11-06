@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 // TODO(FlutterDevelopers): Import modules here
@@ -16,6 +17,8 @@ class ServicesProvider extends StatelessWidget {
         FutureProvider<StorageService>(
           builder: (BuildContext context) async {
             await initializeHive();
+            // TODO(FlutterDevelopers): Initial Hive store here
+            hiveBox['chats'] = await Hive.openBox<ChatModel>('chats');
             final StorageService storage = StorageService();
             // TODO(Vineeth): Removed await for now. Need to fix this later
             storage.initialize();
@@ -35,7 +38,6 @@ class ServicesProvider extends StatelessWidget {
           ) {
             print(
                 '${DateTime.now().toUtc().toString()} NetworkService $storage');
-            final ChatSubScription chatSubScription = ChatSubScription();
             return storage == null
                 ? null
                 : NetworkService('unique',
@@ -43,10 +45,10 @@ class ServicesProvider extends StatelessWidget {
                     subscriptions: <MessageType, Subscriptions<dynamic>>{
                         // TODO(FlutterDevelopers): Import your subscriptions here
                         MessageType.CHAT: Subscriptions<Chat>(
-                          receivingIsolate: chatSubScription.receivingIsolate,
-                          sendingIsolate: chatSubScription.sendingIsolate,
-                          onSendDo: chatSubScription.onSendDo,
-                          onRecieveDo: chatSubScription.onRecieveDo,
+                          receivingIsolate: chatReceivingIsolate,
+                          sendingIsolate: chatSendingIsolate,
+                          onSendDo: chatOnSendDo,
+                          onRecieveDo: chatOnRecieveDo,
                         ),
                       });
           },

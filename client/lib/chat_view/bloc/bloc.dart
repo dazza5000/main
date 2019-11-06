@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:hive/hive.dart';
 import 'package:repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -18,7 +19,10 @@ class ChatBloc {
         _chats = CachedRepository<ChatModel>(
           // strategy: CacheStrategy.onlyFetchFromSourceIfNotInCache,
           source: _ChatFetcher(
-              network: network, user: user, conversationsId: conversationsId),
+            network: network,
+            user: user,
+            conversationsId: conversationsId,
+          ),
           cache: HiveRepository<ChatModel>('chats'),
         ),
         _conversations = CachedRepository<Conversations>(
@@ -29,7 +33,7 @@ class ChatBloc {
     _chatFetcher.stream
         .transform(_chatScreenTransformer())
         .pipe(_chatScreenOutput);
-    getAllChats();
+    initializeScreen();
   }
 
   final NetworkService network;
@@ -57,10 +61,28 @@ class ChatBloc {
     }, <Id<ChatModel>, ChatModel>{});
   }
 
-  Future<bool> getAllChats() async {
-    _chats.fetchAllItems().listen((List<ChatModel> list) {
+  Future<bool> initializeScreen() async {
+/*     _chats.fetchAllItems().listen((List<ChatModel> list) {
+      // ignore: prefer_foreach
       for (ChatModel chat in list) {
         addChatToScreen(chat);
+      }
+    }); */
+    hiveBox['chats'].watch().listen((BoxEvent event) async {
+      if (event.value is ChatModel) {
+        final User _user = await user.getUser(event.value.uid);
+        addChatToScreen(
+          ChatModel(
+            id: event.value.id,
+            text: event.value.text,
+            uid: event.value.uid,
+            user: _user,
+            createdAt: event.value.createdAt,
+            attachmentType: event.value.attachmentType,
+            attachmentUrl: event.value.attachmentUrl,
+            conversationsId: event.value.conversationsId,
+          ),
+        );
       }
     });
     return true;

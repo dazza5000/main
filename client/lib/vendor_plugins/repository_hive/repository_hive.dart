@@ -14,7 +14,9 @@ class HiveRepository<Item> extends Repository<Item> {
   Box<Item> _box;
 
   Future<void> _ensureBoxOpened() async {
-    if (_box == null) await _boxOpener;
+    if (_box == null) {
+      await _boxOpener;
+    }
   }
 
   @override
@@ -27,17 +29,17 @@ class HiveRepository<Item> extends Repository<Item> {
     await _ensureBoxOpened();
 
     if (!_box.containsKey(id.id)) {
-      throw ItemNotFound(id);
+      throw ItemNotFound<Item>(id);
     }
 
-    yield await _box.get(id.id);
+    yield _box.get(id.id);
 
     // The following needs to happen in an other microtask. Otherwise, this
     // leads to unexpected behavior:
     // https://github.com/dart-lang/sdk/issues/34685
     await Future<dynamic>.delayed(Duration.zero);
 
-    await for (var event in _box.watch()) {
+    await for (BoxEvent event in _box.watch()) {
       if (id.matches(event.key)) {
         yield event.value;
       }
@@ -49,8 +51,10 @@ class HiveRepository<Item> extends Repository<Item> {
     await _ensureBoxOpened();
 
     Map<Id<Item>, Item> getCurrent() {
-      return {
-        for (var entry in _box.toMap().entries) Id<Item>(entry.key): entry.value
+      return <Id<Item>, Item>{
+        // ignore: sdk_version_ui_as_code
+        for (MapEntry<dynamic, Item> entry in _box.toMap().entries)
+          Id<Item>(entry.key): entry.value
       };
     }
 
@@ -61,7 +65,7 @@ class HiveRepository<Item> extends Repository<Item> {
     // https://github.com/dart-lang/sdk/issues/34685
     await Future<dynamic>.delayed(Duration.zero);
 
-    await for (var _ in _box.watch()) {
+    await for (BoxEvent _ in _box.watch()) {
       yield getCurrent();
     }
   }
@@ -89,12 +93,5 @@ class HiveRepository<Item> extends Repository<Item> {
 
     await _ensureBoxOpened();
     await _box.put(id.id, item);
-  }
-
-  Future<void> watch() async {
-    await _ensureBoxOpened();
-    return _box.watch().listen((BoxEvent event) {
-      return event.value;
-    });
   }
 }
