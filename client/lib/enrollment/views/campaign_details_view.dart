@@ -15,7 +15,7 @@ class CampainDetailsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            VidPlayer(videoUrl: campaign.videoUrl),
+            //VidPlayer(videoUrl: campaign.videoUrl),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Text(campaign.name),

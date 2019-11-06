@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VidPlayer extends StatefulWidget {
@@ -57,3 +57,4 @@ class VideoState extends State<VidPlayer> {
             : Container());
   }
 }
+ */
