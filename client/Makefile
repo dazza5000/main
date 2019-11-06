@@ -7,7 +7,7 @@ LIB_FSPATH=$(GOPATH)/src/$(LIB)
 
 GO111MODULE=on
 
-SAMPLE_NAME=flutter_Client
+SAMPLE_NAME=client
 SAMPLE_FSPATH=$(LIB_FSPATH)/$(SAMPLE_NAME)
 
 
@@ -22,6 +22,11 @@ print: ## print
 	@echo LIB: $(LIB)
 	@echo LIB_BRANCH: $(LIB_BRANCH)
 	@echo LIB_FSPATH: $(LIB_FSPATH)
+	@echo
+
+	@echo
+	@echo SAMPLE_NAME: $(SAMPLE_NAME)
+	@echo SAMPLE_FSPATH: $(SAMPLE_FSPATH)
 	@echo
 
 git-clone:
@@ -52,11 +57,7 @@ flu-config-desk: ## flu-config-desk
 
 
 
-flu-print: ## flu-print
-	@echo
-	@echo SAMPLE_NAME: $(SAMPLE_NAME)
-	@echo SAMPLE_FSPATH: $(SAMPLE_FSPATH)
-	@echo
+
 flu-clean:
 	cd $(SAMPLE_FSPATH) && flutter clean
 flu-update:
