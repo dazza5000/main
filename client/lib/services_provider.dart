@@ -86,6 +86,9 @@ class ServicesProvider extends StatelessWidget {
         title: 'WinWisely99',
         initialRoute: '/',
         onGenerateRoute: routes,
+        theme: ThemeData(
+          primaryColor: Colors.indigo,
+        ),
       ),
     );
   }

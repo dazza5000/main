@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 // TODO(FlutterDevelopers): Import modules here
 import 'package:com.winwisely99.app/chat_view/chat_view.dart';
-import 'package:com.winwisely99.app/conversations/conversations.dart';
-import 'package:com.winwisely99.app/news/news.dart';
 import 'package:com.winwisely99.app/services/services.dart';
 
 Route<dynamic> routes(RouteSettings settings) {
@@ -18,19 +16,10 @@ Route<dynamic> routes(RouteSettings settings) {
         },
       );
       break;
-    case '/news':
+    case '/home':
       _route = MaterialPageRoute<dynamic>(
         builder: (BuildContext context) {
-          return NewsFeed(
-            key: ValueKey<String>(settings.name),
-          );
-        },
-      );
-      break;
-    case '/conversations':
-      _route = MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) {
-          return ConversationsFeed(
+          return HomeScreen(
             key: ValueKey<String>(settings.name),
           );
         },
@@ -57,7 +46,7 @@ Route<dynamic> routes(RouteSettings settings) {
         default:
           _route = MaterialPageRoute<dynamic>(
             builder: (BuildContext context) {
-              return NewsFeed(
+              return HomeScreen(
                 key: ValueKey<String>(settings.name),
               );
             },

@@ -23,19 +23,7 @@ class NewsFeed extends StatelessWidget {
         network: network,
         user: user,
       ),
-      child: Scaffold(
-          appBar: AppBar(
-            title: const Text('News'),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.comment),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/conversations');
-                },
-              )
-            ],
-          ),
-          body: _NewsFeedBody()),
+      child: _NewsFeedBody(),
     );
   }
 }

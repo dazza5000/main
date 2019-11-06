@@ -23,11 +23,7 @@ class ConversationsFeed extends StatelessWidget {
           ),
         ),
       ],
-      child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Conversations'),
-          ),
-          body: _ConversationsFeedBody()),
+      child: _ConversationsFeedBody(),
     );
   }
 }
