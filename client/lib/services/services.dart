@@ -8,6 +8,7 @@ export './services/storage.dart';
 export './services/user.dart';
 export './utils/utils.dart';
 export './widgets/home_screen.dart';
+export './widgets/login_screen.dart';
 export './widgets/splash_screen.dart';
 
 Completer<dynamic> storageServiceReadyCompleter = Completer<dynamic>();

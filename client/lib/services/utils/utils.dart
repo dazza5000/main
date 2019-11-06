@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:repository/repository.dart';
 
 /// Converts a hex string (like, '#ffdd00') to a [Color].
@@ -60,4 +61,18 @@ abstract class CollectionFetcher<Item extends Entity> extends Repository<Item> {
   }
 
   Future<List<Item>> downloadAll();
+}
+
+class Utils {
+  static Widget verticalMargin(double val) {
+    return SizedBox(height: val);
+  }
+
+  static Widget divider(double val, BuildContext context, Color color) {
+    return Container(
+      height: 0.5,
+      width: MediaQuery.of(context).size.width,
+      color: color,
+    );
+  }
 }
