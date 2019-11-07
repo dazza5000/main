@@ -1,7 +1,0 @@
-Package: com.winwisely99.app
-Architecture: amd64
-Maintainer: @apple
-Priority: optional
-Version: 
-Description: Demonstrates how to use the News module.
-Depends: libx11-6,libxrandr2,libxcursor1,libxinerama1,libglu1-mesa,libgcc1,libstdc++6,libtinfo5,zlib1g
