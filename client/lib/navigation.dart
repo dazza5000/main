@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // TODO(FlutterDevelopers): Import modules here
 import 'package:com.winwisely99.app/chat_view/chat_view.dart';
 import 'package:com.winwisely99.app/enrollment/enrollment.dart';
@@ -14,6 +15,16 @@ Route<dynamic> routes(RouteSettings settings) {
         builder: (BuildContext context) {
           return SplashScreen(
             key: ValueKey<String>(settings.name),
+          );
+        },
+      );
+      break;
+    case '/settings':
+      _route = MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) {
+          return ChangeNotifierProvider<AppConfiguration>.value(
+            value: Provider.of<AppConfiguration>(context),
+            child: const Settings(),
           );
         },
       );

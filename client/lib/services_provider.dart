@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 // TODO(FlutterDevelopers): Import modules here
 import 'package:com.winwisely99.app/chat_view/chat_view.dart';
 import 'package:com.winwisely99.app/services/services.dart';
+import 'app.dart';
 import 'hive.dart';
-import 'navigation.dart';
 
 class ServicesProvider extends StatelessWidget {
   @override
@@ -82,12 +82,10 @@ class ServicesProvider extends StatelessWidget {
               authUser?.dispose(),
         ),
       ],
-      child: MaterialApp(
-        title: 'WinWisely99',
-        initialRoute: '/',
-        onGenerateRoute: routes,
-        theme: ThemeData(
-          primaryColor: Colors.indigo,
+      child: ChangeNotifierProvider<AppConfiguration>(
+        builder: (BuildContext context) => AppConfiguration(),
+        child: const App(
+          key: ValueKey<String>('App'),
         ),
       ),
     );
