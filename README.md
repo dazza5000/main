@@ -28,6 +28,13 @@ If you followed the Developer setup these make files will work on Windows, Mac a
 
 If they do not work for you then raise an issue so that the bootstrap or Makefile can be fixed for everyone benefit.
 
+## CI and CD
+
+There is no CI / CD yet, but soon there will be.
+
+For now just upload them here: https://drive.google.com/drive/folders/11R71oZGZiHWoYmex7jeSowZFcDxvxX5i
+
+
 
 ## Code generation
 
@@ -36,11 +43,6 @@ We make heavy use of code generation.
 The grpc - protobuf parts of both client and server are heavy inspired by
 https://github.com/amsokol/flutter-grpc-tutorial
 
-
-
-## CI and CD
-
-There is no CI / CD yet, but soon there will be.
 
 ## Docs
 
