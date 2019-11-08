@@ -6,9 +6,11 @@ https://getcouragenow.org/
 
 ## Developer setup
 
+You need to make sure you have all the dependencies setup first.
+
 The [bootstrap](https://github.com/winwisely99/bootstrap) repo is for boot strapping your laptop.
 
-Run the examples using the make file to ensure you have an environment that works.
+Run the examples using the Makefile to ensure you have an environment that works.
 
 ## Working on an issue
 
