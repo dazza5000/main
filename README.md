@@ -8,18 +8,37 @@ https://getcouragenow.org/
 
 The [bootstrap](https://github.com/winwisely99/bootstrap) repo is for boot strapping your laptop.
 
-## Roadmap
+Run the examples using the make file to ensure you have an environment that works.
 
-For working out the ordering that issues should be addressed:
+## Working on an issue
 
-https://github.com/winwisely99/main/projects/1
+The [roadmap](https://github.com/winwisely99/bootstrap) should be looked at to work out what to work on.
+
+Is you want to work on an issue, please first ensure that you understand the issue and the suggested approach .
+
+When you take an issue, please assign yourself to it and et everyone know on the Telegram group called "winwisely-dev", so we everyone knows your taking it.
 
 ## Builds
 
 Use the Makefiles and keep them working.
 
+If you followed the Developer setup these make files will work on Windows, Mac and Linux.
+
+If they do not work for you then raise an issue so that the bootstrap or Makefile can be fixed for everyone benefit.
+
+
+## Code generation
+
+We make heavy use of code generation.
+
 The grpc - protobuf parts of both client and server are heavy inspired by
 https://github.com/amsokol/flutter-grpc-tutorial
+
+
+
+## CI and CD
+
+There is no CI / CD yet, but soon there will be.
 
 ## Docs
 
