@@ -20,13 +20,14 @@ class ConversationsAdapter extends TypeAdapter<Conversations> {
       avatarURL: fields[3] as String,
       timestamp: fields[4] as DateTime,
       membersIds: (fields[5] as List)?.cast<Id>(),
+      lastChat: fields[6] as ChatModel,
     );
   }
 
   @override
   void write(BinaryWriter writer, Conversations obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,6 +39,8 @@ class ConversationsAdapter extends TypeAdapter<Conversations> {
       ..writeByte(4)
       ..write(obj.timestamp)
       ..writeByte(5)
-      ..write(obj.membersIds);
+      ..write(obj.membersIds)
+      ..writeByte(6)
+      ..write(obj.lastChat);
   }
 }

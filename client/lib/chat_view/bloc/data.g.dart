@@ -52,7 +52,7 @@ class AttachmentTypeAdapter extends TypeAdapter<AttachmentType> {
   }
 }
 
-class ChatAdapter extends TypeAdapter<ChatModel> {
+class ChatModelAdapter extends TypeAdapter<ChatModel> {
   @override
   ChatModel read(BinaryReader reader) {
     var numOfFields = reader.readByte();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:com.winwisely99.app/conversations/conversations.dart';
+import 'package:com.winwisely99.app/chat_list/chat_list.dart';
 import 'package:com.winwisely99.app/news/news.dart';
 
 class HomeScreen extends StatefulWidget {

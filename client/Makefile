@@ -62,7 +62,8 @@ flu-clean:
 	cd $(SAMPLE_FSPATH) && flutter clean
 flu-update:
 	cd $(SAMPLE_FSPATH) && flutter packages get
-
+	cd $(SAMPLE_FSPATH) && flutter pub run flutter_launcher_icons:main
+	cd $(SAMPLE_FSPATH) && flutter packages pub run build_runner build --delete-conflicting-outputs
 
 
 ### DESK

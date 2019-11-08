@@ -4,7 +4,7 @@ import 'package:repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:com.winwisely99.app/services/services.dart';
-import 'package:com.winwisely99.app/conversations/conversations.dart';
+import 'package:com.winwisely99.app/chat_list/chat_list.dart';
 import 'package:com.winwisely99.app/vendor_plugins/vendor_plugins.dart';
 
 import 'data.dart';
