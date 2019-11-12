@@ -24,6 +24,7 @@ dependencies:
   #video_player: ^0.10.2+3
   numberpicker: ^1.1.0
   material_design_icons_flutter: ^3.2.4495
+  device_preview: ^0.2.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

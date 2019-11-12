@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart'
@@ -29,6 +30,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'WinWisely99',
       initialRoute: '/',
+      locale: DevicePreview.of(context)?.locale, // <--
+      builder: DevicePreview.appBuilder, // <--
       debugShowMaterialGrid: _configuration.debugShowGrid,
       showPerformanceOverlay: _configuration.showPerformanceOverlay,
       showSemanticsDebugger: _configuration.showSemanticsDebugger,
